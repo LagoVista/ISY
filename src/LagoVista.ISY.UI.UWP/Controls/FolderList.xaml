@@ -1,0 +1,57 @@
+﻿<UserControl
+    x:Class="LagoVista.ISY.UI.UWP.Controls.FolderList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LagoVista.ISY.UI.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vms ="using:LagoVista.ISY.ViewModels"
+    xmlns:mdls ="using:LagoVista.ISY.Models"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <vms:FoldersViewModel x:Key="FoldersViewModel">
+            <vms:FoldersViewModel.Folders>
+                <mdls:Folder Name="Room 1" />
+                <mdls:Folder Name="Room 2" />
+                <mdls:Folder Name="Room 3" />
+                <mdls:Folder Name="Room 4" />
+            </vms:FoldersViewModel.Folders>
+        </vms:FoldersViewModel>
+        <Style TargetType="Grid" x:Key="FolderStyle">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="10" />
+        </Style>
+        <Style TargetType="TextBlock" x:Key="FolderDetail">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="Margin" Value="4" />
+            
+        </Style>
+    </UserControl.Resources>
+
+    <Grid d:DataContext="{StaticResource FoldersViewModel}">
+        <GridView ItemsSource="{Binding Path=Folders}" SelectedItem="{Binding SelectedFolder, Mode=TwoWay}" >
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="180" Height="150" Style="{StaticResource FolderStyle}">
+                        <Grid.Background>
+                            <SolidColorBrush Color="#007fFF" Opacity="0.33" />
+                        </Grid.Background>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="auto" />
+                            
+                        </Grid.RowDefinitions>
+                        <Image Source="{Binding RoomImage}" Width="100" Height="100" Grid.Row="0" />
+                        <TextBlock Text="{Binding Name}" Style="{StaticResource FolderDetail}" Grid.Row="1" />
+                        
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
+</UserControl>
