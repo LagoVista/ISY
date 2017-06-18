@@ -20,7 +20,7 @@ namespace LagoVista.ISY994i.Core.Models
         [DataMember]
         public String RoomImage
         {
-            get { return "ms-appx:///LagoVista.Common.UI.ISY/Images/Room.png"; }
+            get { return "ms-appx:///LagoVista.ISY994i.UI.UWP/Images/Room.png"; }
         }
 
         [DataMember]

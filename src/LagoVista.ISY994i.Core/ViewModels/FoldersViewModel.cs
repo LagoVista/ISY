@@ -43,7 +43,7 @@ namespace LagoVista.ISY994i.Core.ViewModels
                     _selectedFolder = value;
                     if (value != null)
                     {
-                        ViewModelNavigation.NavigateAsync(new ViewModelLaunchArgs() { ViewModelType = typeof(FolderViewModel) });
+                        ViewModelNavigation.NavigateAsync(new ViewModelLaunchArgs() { ViewModelType = typeof(FolderViewModel), Parent = value });
                     }
                 }
             }

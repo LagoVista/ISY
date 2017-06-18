@@ -8,7 +8,7 @@ namespace LagoVista.ISY994i.Core.ViewModels
 
         public override Task InitAsync()
         {
-            Folder = NavigationParameter as Models.Folder;
+            Folder = LaunchArgs.Parent as Models.Folder;
             return Task.FromResult(default(object));
         }
 

@@ -85,7 +85,7 @@ namespace LagoVista.ISY994i.Core.Models
             get
             {
                 if (Status.ToLower() == "updating")
-                    return "ms-appx:///LagoVista.Common.UI.ISY/Images/Transmitting.png";
+                    return "ms-appx:///LagoVista.ISY994i.UI.UWP/Images/Transmitting.png";
 
                 switch (DeviceType.DeviceCategory)
                 {
@@ -104,7 +104,7 @@ namespace LagoVista.ISY994i.Core.Models
                     case DeviceType.DeviceCateogry.Unknown: return "ms-appx:///LagoVista.ISY994i.UI.UWP/Images/QuestionMark.png";
                 }
 
-                return "ms-appx:///LagoVista.Common.UI.ISY/Images/QuestionMark.png";
+                return "ms-appx:///LagoVista.ISY994i.UI.UWP/Images/QuestionMark.png";
             }
         }
 

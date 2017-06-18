@@ -153,13 +153,13 @@
       <Version>1.2.29-alpha1859</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core.UWP">
-      <Version>1.2.25-alpha1524</Version>
+      <Version>1.2.32-alpha0802</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.IoT.Logging">
       <Version>1.2.29-alpha1859</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.UWP.UI">
-      <Version>1.2.25-alpha1524</Version>
+      <Version>1.2.32-alpha0802</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Azure.Mobile.Analytics">
       <Version>0.12.0</Version>

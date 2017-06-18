@@ -89,7 +89,7 @@ namespace LagoVista.ISY994i.Sample.UWP
                 var mobileCenterAnalytics = new LagoVista.Core.UWP.Loggers.MobileCenterLogger("9b075936-0855-40ff-b332-86c57fffa6ae");
                 SLWIOC.RegisterSingleton<ILogger>(mobileCenterAnalytics);
 
-               // await SmartThingsHubs.Instance.InitAsync();
+               //await SmartThingsHubs.Instance.InitAsync();
 
                 UnhandledException += App_UnhandledException;
 
@@ -117,9 +117,7 @@ namespace LagoVista.ISY994i.Sample.UWP
                 ISYService.Instance.Connected += Instance_Connected;
                 ISYService.Instance.Disconnected += Instance_Disconnected;
                 ISYEventListener.Instance.ISYEventReceived += Instance_ISYEventReceived;
-                
-
-
+          
                 await ISYService.Instance.InitAsync();
                 await ISYService.Instance.RefreshAsync();
 
