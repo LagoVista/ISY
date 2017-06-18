@@ -7,6 +7,7 @@ using LagoVista.Core.ServiceCommon;
 using LagoVista.Core.Interfaces;
 using LagoVista.ISY994i.Core.Services;
 using LagoVista.ISY994i.Core.Models;
+using System.Diagnostics;
 
 namespace LagoVista.ISY.UI.UWP.Services
 {
@@ -63,7 +64,7 @@ namespace LagoVista.ISY.UI.UWP.Services
             }
             catch (Exception ex)
             {
-                Core.PlatformSupport.Services.Logger.LogException("ISYListener.StartListening", ex);
+                Core.PlatformSupport.Services.Logger.AddException("ISYListener.StartListening", ex);
                 IsConnected = false;
                 return false;
             }
@@ -110,7 +111,7 @@ namespace LagoVista.ISY.UI.UWP.Services
                 var node = _isyService.DataContext.Devices.Where(addr => addr.Address == isyUpdateEvent.Node).FirstOrDefault();
 
                 var name = node == null ? "?" : node.Name;
-                Log("ISY Listener", String.Format("\r\nSeq# {0} Sid# {1} Device =>  {2},{3} = {4} {5} ", isyUpdateEvent.SequenceNumber, isyUpdateEvent.Sid, name, isyUpdateEvent.Node, isyUpdateEvent.Action, DateTime.Now));
+                Debug.WriteLine( String.Format("\r\nSeq# {0} Sid# {1} Device =>  {2},{3} = {4} {5} ", isyUpdateEvent.SequenceNumber, isyUpdateEvent.Sid, name, isyUpdateEvent.Node, isyUpdateEvent.Action, DateTime.Now));
 
                 if (node != null)
                 {

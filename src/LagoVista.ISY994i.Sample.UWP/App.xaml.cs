@@ -16,6 +16,10 @@ using LagoVista.Core.UWP.ViewModels.Common;
 using LagoVista.UWP.UI;
 using Newtonsoft.Json;
 using LagoVista.ISY994i.Sample.UWP.Views;
+using LagoVista.Core;
+using LagoVista.Core.PlatformSupport;
+using LagoVista.Core.Networking.Interfaces;
+using Windows.UI.Core;
 
 namespace LagoVista.ISY994i.Sample.UWP
 {
@@ -38,6 +42,29 @@ namespace LagoVista.ISY994i.Sample.UWP
             SLWIOC.Register<IViewModelNavigation>(Navigation.Instance);
         }
 
+        private void RegisterUWPServices(CoreDispatcher dispatcher)
+        {
+            SLWIOC.RegisterSingleton<IDispatcherServices>(new DispatcherServices(dispatcher));
+            SLWIOC.RegisterSingleton<IStorageService>(new StorageService());
+            SLWIOC.RegisterSingleton<IPopupServices>(new PopupsService());
+
+            SLWIOC.RegisterSingleton<IDeviceManager>(new DeviceManager());
+
+            SLWIOC.RegisterSingleton<INetworkService>(new NetworkService());
+            SLWIOC.Register<IImaging>(new Imaging());
+            SLWIOC.Register<IBindingHelper>(new BindingHelper());
+
+            SLWIOC.RegisterSingleton<ISSDPClient>(new SSDPClient());
+            SLWIOC.RegisterSingleton<IWebServer>(new WebServer());
+
+            SLWIOC.Register<ISSDPClient>(typeof(SSDPClient));
+            SLWIOC.Register<IWebServer>(typeof(WebServer));
+            SLWIOC.Register<ISSDPServer>(new SSDPServer());
+
+            SLWIOC.Register<ITimerFactory>(new TimerFactory());
+
+        }
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -57,7 +84,10 @@ namespace LagoVista.ISY994i.Sample.UWP
                 Navigation.Instance.Initialize(rootFrame);
                 Window.Current.Content = rootFrame;
 
-                UWPDeviceServices.Init(Window.Current.Dispatcher);
+                RegisterUWPServices(Window.Current.Dispatcher);
+
+                var mobileCenterAnalytics = new LagoVista.Core.UWP.Loggers.MobileCenterLogger("9b075936-0855-40ff-b332-86c57fffa6ae");
+                SLWIOC.RegisterSingleton<ILogger>(mobileCenterAnalytics);
 
                // await SmartThingsHubs.Instance.InitAsync();
 
@@ -87,6 +117,8 @@ namespace LagoVista.ISY994i.Sample.UWP
                 ISYService.Instance.Connected += Instance_Connected;
                 ISYService.Instance.Disconnected += Instance_Disconnected;
                 ISYEventListener.Instance.ISYEventReceived += Instance_ISYEventReceived;
+                
+
 
                 await ISYService.Instance.InitAsync();
                 await ISYService.Instance.RefreshAsync();
@@ -127,7 +159,7 @@ namespace LagoVista.ISY994i.Sample.UWP
 
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs ex)
         {
-            LagoVista.Core.PlatformSupport.Services.Logger.LogException("Unhandled Exception", ex.Exception);
+            LagoVista.Core.PlatformSupport.Services.Logger.AddException("Unhandled Exception", ex.Exception);
         }
 
         private void Instance_Disconnected(object sender, EventArgs e)

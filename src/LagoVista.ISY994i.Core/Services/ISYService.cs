@@ -169,7 +169,7 @@ namespace LagoVista.ISY994i.Core.Services
             }
             catch (Exception ex)
             {
-                LagoVista.Core.PlatformSupport.Services.Logger.LogException("ISY.RefreshAsync", ex);
+                LagoVista.Core.PlatformSupport.Services.Logger.AddException("ISY.RefreshAsync", ex);
                 IsConnected = false;
                 return false;
             }

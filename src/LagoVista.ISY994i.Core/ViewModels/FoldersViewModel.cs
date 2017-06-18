@@ -2,6 +2,7 @@
 using LagoVista.Core.ViewModels;
 using LagoVista.ISY994i.Core.Services;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace LagoVista.ISY994i.Core.ViewModels
 {
@@ -23,10 +24,12 @@ namespace LagoVista.ISY994i.Core.ViewModels
             set { Set(ref _folders, value); }
         }
 
-        public override void Init()
+        public override Task InitAsync()
         {
             Folders = ISYService.Instance.DataContext.Folders;
             Events = ISYService.Instance.DataContext.Events;
+
+            return Task.FromResult(default(object));
         }
 
         private Models.Folder _selectedFolder;
@@ -39,7 +42,9 @@ namespace LagoVista.ISY994i.Core.ViewModels
                 {
                     _selectedFolder = value;
                     if (value != null)
-                        ShowViewModel<FolderViewModel>(value);
+                    {
+                        ViewModelNavigation.NavigateAsync(new ViewModelLaunchArgs() { ViewModelType = typeof(FolderViewModel) });
+                    }
                 }
             }
         }

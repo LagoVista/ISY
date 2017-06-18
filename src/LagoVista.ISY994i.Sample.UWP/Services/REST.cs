@@ -1,4 +1,5 @@
 ﻿using LagoVista.Core.UWP.Services;
+using LagoVista.ISY994i.Core.Models;
 using LagoVista.ISY994i.Core.Services;
 using Newtonsoft.Json;
 using System;
@@ -12,7 +13,7 @@ namespace LagoVista.ISYAutomation.Services
     {
         public override async Task<bool> HandleRequestAsync(StreamSocket socket, string path)
         {
-            Core.PlatformSupport.Services.Logger.Log(Core.PlatformSupport.LogLevel.Verbose, "SSDPClient.HandleRequestAsync", "Handling Web Request: " + path);
+            Core.PlatformSupport.Services.Logger.AddCustomEvent(Core.PlatformSupport.LogLevel.Verbose, "SSDPClient.HandleRequestAsync", "Handling Web Request: " + path);
 
             path = path.ToLower();
 
@@ -30,52 +31,52 @@ namespace LagoVista.ISYAutomation.Services
                     {
                         case "multibutton":
                             {
-                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == ISY.Models.DeviceType.DeviceCateogry.MultiSwitch && dvc.Address.EndsWith(" 1"));
+                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == DeviceType.DeviceCateogry.MultiSwitch && dvc.Address.EndsWith(" 1"));
                                 var json = JsonConvert.SerializeObject(devices);
                                 await WriteResponseAsync(socket, "application/json", 200, json);
                                 return true;
                             }
                         case "ledbulb":
                             {
-                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == ISY.Models.DeviceType.DeviceCateogry.LEDLightBulb);
+                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == DeviceType.DeviceCateogry.LEDLightBulb);
                                 var json = JsonConvert.SerializeObject(devices);
                                 await WriteResponseAsync(socket, "application/json", 200, json);
                                 return true;
                             }
                         case "thermostat":
                             {
-                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == ISY.Models.DeviceType.DeviceCateogry.Thermostat);
+                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == DeviceType.DeviceCateogry.Thermostat);
                                 var json = JsonConvert.SerializeObject(devices);
                                 await WriteResponseAsync(socket, "application/json", 200, json);
                                 return true;
                             }
                         case "fanmotor":
                             {
-                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == ISY.Models.DeviceType.DeviceCateogry.FanMotor);
+                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == DeviceType.DeviceCateogry.FanMotor);
                                 var json = JsonConvert.SerializeObject(devices);
                                 await WriteResponseAsync(socket, "application/json", 200, json);
                                 return true;
                             }
                         case "fanlight":
                             {
-                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == ISY.Models.DeviceType.DeviceCateogry.FanLight);
+                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == DeviceType.DeviceCateogry.FanLight);
                                 var json = JsonConvert.SerializeObject(devices);
                                 await WriteResponseAsync(socket, "application/json", 200, json);
                                 return true;
                             }
                         case "contact":
                             {
-                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == ISY.Models.DeviceType.DeviceCateogry.ContactSwitch && dvc.Address.EndsWith(" 1"));
+                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == DeviceType.DeviceCateogry.ContactSwitch && dvc.Address.EndsWith(" 1"));
                                 var json = JsonConvert.SerializeObject(devices);
                                 await WriteResponseAsync(socket, "application/json", 200, json);
                                 return true;
                             }
                         case "switch":
                             {
-                                var devices = ISY.Services.ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == ISY.Models.DeviceType.DeviceCateogry.ToggleSwitch ||
-                                                                                                                       dvc.DeviceType.DeviceCategory == ISY.Models.DeviceType.DeviceCateogry.InlineSwitch ||
-                                                                                                                       dvc.DeviceType.DeviceCategory == ISY.Models.DeviceType.DeviceCateogry.ToggleSwitch ||
-                                                                                                                       dvc.DeviceType.DeviceCategory == ISY.Models.DeviceType.DeviceCateogry.OutdoorModule);
+                                var devices = ISYService.Instance.DataContext.Devices.Where(dvc => dvc.DeviceType.DeviceCategory == DeviceType.DeviceCateogry.ToggleSwitch ||
+                                                                                                                       dvc.DeviceType.DeviceCategory == DeviceType.DeviceCateogry.InlineSwitch ||
+                                                                                                                       dvc.DeviceType.DeviceCategory == DeviceType.DeviceCateogry.ToggleSwitch ||
+                                                                                                                       dvc.DeviceType.DeviceCategory == DeviceType.DeviceCateogry.OutdoorModule);
                                 var json = JsonConvert.SerializeObject(devices);
                                 await WriteResponseAsync(socket, "application/json", 200, json);
                                 return true;
