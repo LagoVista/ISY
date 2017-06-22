@@ -20,6 +20,8 @@ using LagoVista.Core;
 using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Networking.Interfaces;
 using Windows.UI.Core;
+using LagoVista.SmartThings;
+using LagoVista.ISYAutomation.Services;
 
 namespace LagoVista.ISY994i.Sample.UWP
 {
@@ -28,7 +30,7 @@ namespace LagoVista.ISY994i.Sample.UWP
     /// </summary>
     sealed partial class App : Application
     {
-        SSDPServer _restClient;
+        RESTClient _restClient;
         DateTime _startTime;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -65,21 +67,13 @@ namespace LagoVista.ISY994i.Sample.UWP
 
         }
 
-        /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used such as when the application is launched to open a specific file.
-        /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
             _startTime = DateTime.Now;
 
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
             if (rootFrame == null)
             {
-                // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
                 Navigation.Instance.Initialize(rootFrame);
                 Window.Current.Content = rootFrame;
@@ -87,21 +81,26 @@ namespace LagoVista.ISY994i.Sample.UWP
                 RegisterUWPServices(Window.Current.Dispatcher);
 
                 var mobileCenterAnalytics = new LagoVista.Core.UWP.Loggers.MobileCenterLogger("9b075936-0855-40ff-b332-86c57fffa6ae");
-                SLWIOC.RegisterSingleton<ILogger>(mobileCenterAnalytics);
+                //SLWIOC.RegisterSingleton<ILogger>(mobileCenterAnalytics);
 
-               //await SmartThingsHubs.Instance.InitAsync();
+                SLWIOC.RegisterSingleton<ILogger>(new LagoVista.IoT.Logging.DebugLogger());
+
+                await SmartThingsHubs.Instance.InitAsync();
 
                 UnhandledException += App_UnhandledException;
 
                 Navigation.Instance.Add<FolderViewModel, FolderView>();
                 Navigation.Instance.Add<DeviceDiscoveryViewModel, DeviceDiscoveryView>();
 
-                _restClient = new SSDPServer();
+                _restClient = new RESTClient();
+                _restClient.ShowDiagnostics = true;
+              
                 
-                if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.IoT")
+                if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.IoT" )
                 {
-                    _restClient.MakeDiscoverable(9301, new LagoVista.Core.Networking.Models.UPNPConfiguration()
+                    var config =  new LagoVista.Core.Networking.Models.UPNPConfiguration()
                     {
+                        DefaultPageHtml = "<html>HelloWorld</html>",
                         DeviceType = "X_LagoVista_ISY_Kiosk_Device",
                         FriendlyName = "ISY Remote Kiosk",
                         Manufacture = "Software Logistics, LLC",
@@ -111,7 +110,17 @@ namespace LagoVista.ISY994i.Sample.UWP
                         ModelNumber = "SL001",
                         ModelUrl = "www.TheWolfBytes.com",
                         SerialNumber = "KSK001"
-                    });
+                    };
+
+                    try
+                    {
+
+                        await _restClient.MakeDiscoverableAsync(9301, config);
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
                 }
 
                 ISYService.Instance.Connected += Instance_Connected;
@@ -144,12 +153,12 @@ namespace LagoVista.ISY994i.Sample.UWP
             Window.Current.Activate();
         }
 
-        private void Instance_ISYEventReceived(object sender, ISYEvent evt)
+        private async void Instance_ISYEventReceived(object sender, ISYEvent evt)
         {
             if ((DateTime.Now - _startTime).TotalSeconds > 30)
             {
                 var json = JsonConvert.SerializeObject(evt);
-        //        await SmartThingsHubs.Instance.SendToHubsAsync(json);
+                await SmartThingsHubs.Instance.SendToHubsAsync(json);
             }
             else
                 Debug.WriteLine("START UP MESSAGE" + evt.Device.Address);

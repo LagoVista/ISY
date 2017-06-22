@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="1.2.29-alpha1859" />
-    <PackageReference Include="LagoVista.Core.Networking" Version="1.2.29-alpha1859" />
+    <PackageReference Include="LagoVista.Core" Version="1.2.35-alpha1836" />
+    <PackageReference Include="LagoVista.Core.Networking" Version="1.2.35-alpha1836" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
     <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />

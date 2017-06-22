@@ -130,19 +130,19 @@
       <Version>1.2.24-alpha1823</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core">
-      <Version>1.2.29-alpha1859</Version>
+      <Version>1.2.35-alpha1836</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core.Authentication">
-      <Version>1.2.29-alpha1859</Version>
+      <Version>1.2.35-alpha1836</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core.Networking">
-      <Version>1.2.29-alpha1859</Version>
+      <Version>1.2.35-alpha1836</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core.UWP">
-      <Version>1.2.32-alpha0802</Version>
+      <Version>1.2.32-alpha1052</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.UWP.UI">
-      <Version>1.2.32-alpha0802</Version>
+      <Version>1.2.32-alpha1052</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.3.3</Version>

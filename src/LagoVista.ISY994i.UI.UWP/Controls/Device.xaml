@@ -39,12 +39,12 @@
         <CommandBar Visibility="{Binding IsDimmable, Converter={StaticResource VisibilityConverter}}" >
             <AppBarButton Label="-" Command="{Binding DeviceDimCommand}" >
                 <AppBarButton.Icon>
-                    <BitmapIcon UriSource="ms-appx:///LagoVista.ISY.UI.UWP/Images/Minus.png" />
+                    <BitmapIcon UriSource="ms-appx:///LagoVista.ISY994i.UI.UWP/Images/Minus.png" />
                 </AppBarButton.Icon >
             </AppBarButton>
             <AppBarButton Label="+" Command="{Binding DeviceBrightCommand}" >
                 <AppBarButton.Icon>
-                    <BitmapIcon UriSource="ms-appx:///LagoVista.ISY.UI.UWP/Images/Plus.png" />
+                    <BitmapIcon UriSource="ms-appx:///LagoVista.ISY994i.UI.UWP/Images/Plus.png" />
                 </AppBarButton.Icon >
             </AppBarButton>
             <AppBarButton Label="Pin" Icon="Pin" Command="{Binding PinDeviceCommand}" />
@@ -53,17 +53,17 @@
         <CommandBar  Visibility="{Binding IsFan, Converter={StaticResource VisibilityConverter}}">
             <AppBarButton Label="Low" Command="{Binding DeviceOnLowCommand}"  >
                 <AppBarButton.Icon>
-                    <BitmapIcon UriSource="ms-appx:///LagoVista.ISY.UI.UWP/Images/PowerLow.png" />
+                    <BitmapIcon UriSource="ms-appx:///LagoVista.ISY994i.UI.UWP/Images/PowerLow.png" />
                 </AppBarButton.Icon >
             </AppBarButton>
             <AppBarButton Label="Med" Command="{Binding DeviceOnMediumCommand}"  >
                 <AppBarButton.Icon>
-                    <BitmapIcon UriSource="ms-appx:///LagoVista.ISY.UI.UWP/Images/PowerMedium.png" />
+                    <BitmapIcon UriSource="ms-appx:///LagoVista.ISY994i.UI.UWP/Images/PowerMedium.png" />
                 </AppBarButton.Icon >
             </AppBarButton>
             <AppBarButton Label="High" Command="{Binding DeviceOnHighCommand}"  >
                 <AppBarButton.Icon>
-                    <BitmapIcon UriSource="ms-appx:///LagoVista.ISY.UI.UWP/Images/PowerHigh.png" />
+                    <BitmapIcon UriSource="ms-appx:///LagoVista.ISY994i.UI.UWP/Images/PowerHigh.png" />
                 </AppBarButton.Icon >
             </AppBarButton>
             <AppBarButton Label="Pin" Icon="Pin" Command="{Binding PinDeviceCommand}" />
@@ -86,9 +86,9 @@
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="2"  Text="{Binding Name}" FontSize="18" TextWrapping="Wrap" />
                 <TextBlock Text="{Binding StatusDisplay}" Grid.Row="1" Grid.ColumnSpan="2"  />
 
-                <ctl:TapableImage Width="128" Height="128" Caption="On" Source="ms-appx:///LagoVista.ISY.UI.UWP/Images/PowerOn.png" TapDownCommand="{Binding DeviceOffCommand}" Grid.Row="2" Grid.Column="1"  Visibility="{Binding IsDeviceOn, Converter={StaticResource VisibilityConverter}}" />
-                <ctl:TapableImage Width="128" Height="128" Caption="Off" Source="ms-appx:///LagoVista.ISY.UI.UWP/Images/PowerOff.png" TapDownCommand="{Binding DeviceOnCommand}" Grid.Row="2" Grid.Column="1"  Visibility="{Binding IsDeviceOff, Converter={StaticResource VisibilityConverter}}" />
-                <ctl:TapableImage Width="128" Height="128" Source="{Binding IconImage, FallbackValue=ms-appx:///LagoVista.Common.UI.ISY/Images/Lamp.png}" Caption="{Binding Path=DeviceType.DeviceName}" Grid.Row="2"  />
+                <ctl:TapableImage Width="128" Height="128" Caption="On" Source="ms-appx:///LagoVista.ISY994i.UI.UWP/Images/PowerOn.png" TapDownCommand="{Binding DeviceOffCommand}" Grid.Row="2" Grid.Column="1"  Visibility="{Binding IsDeviceOn, Converter={StaticResource VisibilityConverter}}" />
+                <ctl:TapableImage Width="128" Height="128" Caption="Off" Source="ms-appx:///LagoVista.ISY994i.UI.UWP/Images/PowerOff.png" TapDownCommand="{Binding DeviceOnCommand}" Grid.Row="2" Grid.Column="1"  Visibility="{Binding IsDeviceOff, Converter={StaticResource VisibilityConverter}}" />
+                <ctl:TapableImage Width="128" Height="128" Source="{Binding IconImage, FallbackValue=ms-appx:///LagoVista.ISY994i.UI.UWP/Images/Lamp.png}" Caption="{Binding Path=DeviceType.DeviceName}" Grid.Row="2"  />
             </Grid>
         </Grid>
     </Grid>
