@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>LagoVista.ISY994i.UI.UWP</id>
+    <version>1.2.207-alpha00442</version>
+    <authors>Software Logistics, LLC</authors>
+    <owners>Software Logistics, LLC</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>http://github.com/LagoVista</projectUrl>
+    <iconUrl>http://bytemaster.blob.core.windows.net/icons/LagoVistaIcon.png</iconUrl>
+    <description>Provides a set of User Interface Controls for building UWP Applications for communicating with the ISY994i Home Automation Controller</description>
+    <releaseNotes>Pre-release Software</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>HomeAutomation IoT LagoVista ISY994 Insteon</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="10.0.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\LagoVista.ISY994i.UI.UWP.dll" target="ref\uap10.0" />
+    <file src="bin\ARM\Release\LagoVista.ISY994i.UI.UWP.dll" target="runtimes\win10-arm\lib\uap10.0" />
+    <file src="bin\ARM\Release\LagoVista.ISY994i.UI.UWP.pri" target="runtimes\win10-arm\lib\uap10.0" />
+    <file src="bin\x64\Release\LagoVista.ISY994i.UI.UWP.dll" target="runtimes\win10-x64\lib\uap10.0" />
+    <file src="bin\x64\Release\LagoVista.ISY994i.UI.UWP.pri" target="runtimes\win10-x64\lib\uap10.0" />
+    <file src="bin\x86\Release\LagoVista.ISY994i.UI.UWP.dll" target="runtimes\win10-x86\lib\uap10.0" />
+    <file src="bin\x86\Release\LagoVista.ISY994i.UI.UWP.pri" target="runtimes\win10-x86\lib\uap10.0" />
+    <file src="Controls\Device.xaml" target="lib\uap10.0\Controls" />
+    <file src="Controls\DeviceList.xaml" target="lib\uap10.0\Controls" />
+    <file src="Controls\FolderList.xaml" target="lib\uap10.0\Controls" />
+    <file src="Controls\SceneList.xaml" target="lib\uap10.0\Controls" />
+    <file src="Controls\SensorList.xaml" target="lib\uap10.0\Controls" />
+  </files>
+</package>

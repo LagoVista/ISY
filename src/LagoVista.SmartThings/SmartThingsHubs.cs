@@ -81,6 +81,5 @@ namespace LagoVista.SmartThings
             foreach (var stHub in _hubs)
                 await stHub.SendAsync(content);
         }
-
     }
 }

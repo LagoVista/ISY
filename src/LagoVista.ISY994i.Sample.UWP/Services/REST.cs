@@ -1,8 +1,10 @@
 ﻿using LagoVista.Core.UWP.Services;
 using LagoVista.ISY994i.Core.Models;
 using LagoVista.ISY994i.Core.Services;
+using LagoVista.SmartThings;
 using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
@@ -14,6 +16,25 @@ namespace LagoVista.ISYAutomation.Services
         public override async Task<bool> HandleRequestAsync(StreamSocket socket, string path)
         {
             Core.PlatformSupport.Services.Logger.AddCustomEvent(Core.PlatformSupport.LogLevel.Verbose, "SSDPClient.HandleRequestAsync", "Handling Web Request: " + path);
+
+            switch (path)
+            {
+                case "/stping":
+                    {
+                        var hubId = path.Substring("/stping".Length).TrimStart('/');
+                        var stHub = SmartThingsHubs.Instance.Hubs.Where(hub => hub.Id.ToLower() == hubId.ToLower()).FirstOrDefault();
+                        stHub.LastPing = DateTime.Now;
+                        await WriteResponseAsync(socket, "application/json", 200, @"{""status"":""pong""}"); break;
+                    }
+                case "/stsubscribe":
+                    {
+                        var hubId = path.Substring("/stsubscribe".Length).TrimStart('/');
+                        SubscribeToSmartThingHub(hubId, socket.Information.RemoteAddress.DisplayName, socket.Information.RemotePort);
+                        await WriteResponseAsync(socket, "application/json", 200, @"{""subscribed"":""ok""}");
+                    }
+                    break;
+            }
+            
 
             path = path.ToLower();
 
@@ -81,8 +102,6 @@ namespace LagoVista.ISYAutomation.Services
                                 await WriteResponseAsync(socket, "application/json", 200, json);
                                 return true;
                             }
-
-
                     }
                 }
             }
@@ -127,6 +146,41 @@ namespace LagoVista.ISYAutomation.Services
 
 
             return false;
+        }
+
+        public void SubscribeToSmartThingHub(String hubId, String ipAddress, String port)
+        {
+            hubId = hubId.TrimStart('/');
+            lock (SmartThingsHubs.Instance)
+            {
+                var stHub = SmartThingsHubs.Instance.Hubs.Where(hub => hub.Id.ToLower() == hubId.ToLower()).FirstOrDefault();
+                if (stHub == null)
+                {
+                    Debug.WriteLine("COULD NOT FIND SMART THINGS HUB, SUBSCRIBE AND RECREATE");
+                    SmartThingsHubs.Instance.Hubs.Add(new SmartThingsHub()
+                    {
+                        Id = hubId,
+                        IPAddress = ipAddress,
+                        Port = port,
+                        LastPing = DateTime.Now
+                    });
+
+                }
+                else if (ipAddress != stHub.IPAddress || port != stHub.Port)
+                {
+                    Debug.WriteLine("FOUND SMART THINGS HUB, BUT DIFFERENT IP");
+                    stHub.IPAddress = ipAddress;
+                    stHub.Port = port;
+                    stHub.LastPing = DateTime.Now;
+                }
+                else
+                {
+                    Debug.WriteLine("FOUND SMART THINGS HUB, SAME IP");
+                    stHub.LastPing = DateTime.Now;
+                }
+
+                SmartThingsHubs.Instance.Save();
+            }
         }
     }
 }

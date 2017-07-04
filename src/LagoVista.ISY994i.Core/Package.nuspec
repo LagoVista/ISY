@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>LagoVista.ISY994i.Core</id>
+    <version>1.2.207-alpha00442</version>
+    <authors>Software Logistics, LLC</authors>
+    <owners>Software Logistics, LLC</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>http://github.com/LagoVista</projectUrl>
+    <iconUrl>http://bytemaster.blob.core.windows.net/icons/LagoVistaIcon.png</iconUrl>
+    <description>Provides Models and Services to communicate with ISY994i Home Automation Controller</description>
+    <releaseNotes>Pre-release Software</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>HomeAutomation IoT LagoVista ISY994 Insteon</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="10.0.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\release\netstandard1.4\*.dll" target="lib\netstandard1.4" />
+  </files>
+</package>

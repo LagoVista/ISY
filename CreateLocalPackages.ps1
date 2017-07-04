@@ -4,20 +4,36 @@ Set-Location $scriptPath
 
 . ./BuildAll.ps1
 
-. ./UpdateNuspecVersion.ps1 -preRelease alpha -major 0 -minor 8
+. ./UpdateNuspecVersion.ps1 -preRelease alpha -major 1 -minor 2
 
-$oldChildren = gci $scriptPath -Recurse *.nupkg
-foreach( $oldChild in $oldChildren)
-{
+$oldChildren = gci $scriptPath  *.nupkg
+foreach( $oldChild in $oldChildren){
+	"Removed " + $oldChild
 	Remove-Item $oldChild -Recurse
 }
 
 $children = gci $scriptPath -recurse *.nuspec
-foreach( $child in $children)
-{
-	$projectPath = Split-Path $child.FullName
 
-	Write-Output $child.FullName
-	nuget pack -OutputDirectory D:\LocalNuget $child.FullName
+$scriptPath
+
+foreach( $child in $children){
+	$projectPath = Split-Path $child.FullName
 	nuget pack $child.FullName
+	"------------------------------------------------------"
+	"   "
 }
+
+$children = gci $scriptpath *.nupkg
+
+# Add this key via control panel environment variables [NUGETAPIKEY] to be obtained from the LagoVista Nuget Account
+
+foreach( $child in $children){
+	Write-Output "Publishing Output $child.fullName" 
+	nuget push $child.fullName -Source https://www.nuget.org/api/v2/package -ApiKey $env:NUGETAPIKEY
+}
+
+#$oldChildren = gci $scriptPath  *.nupkg
+#foreach( $oldChild in $oldChildren){
+#	"Removed " + $oldChild
+#	Remove-Item $oldChild -Recurse
+#}

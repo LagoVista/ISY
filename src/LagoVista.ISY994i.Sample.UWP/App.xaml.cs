@@ -64,7 +64,6 @@ namespace LagoVista.ISY994i.Sample.UWP
             SLWIOC.Register<ISSDPServer>(new SSDPServer());
 
             SLWIOC.Register<ITimerFactory>(new TimerFactory());
-
         }
 
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
@@ -79,9 +78,6 @@ namespace LagoVista.ISY994i.Sample.UWP
                 Window.Current.Content = rootFrame;
 
                 RegisterUWPServices(Window.Current.Dispatcher);
-
-                var mobileCenterAnalytics = new LagoVista.Core.UWP.Loggers.MobileCenterLogger("9b075936-0855-40ff-b332-86c57fffa6ae");
-                //SLWIOC.RegisterSingleton<ILogger>(mobileCenterAnalytics);
 
                 SLWIOC.RegisterSingleton<ILogger>(new LagoVista.IoT.Logging.DebugLogger());
 
